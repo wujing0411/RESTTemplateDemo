@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="OFF">
+	<Appenders>
+		<!-- 输出到控制台 -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} :%n%msg%n"/>
+		</Console>
+		<!-- 输出到滚动文件 -->
+		<RollingRandomAccessFile name="TestLog" fileName="logs/testlog/testlog.log" filePattern="logs/testlog/$${date:yyyy-MM}/testlog-%d{yyyy-MM-dd}-%i.log">
+			<ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} [%t] %-5level %logger{36} :%n%msg%n"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+				<SizeBasedTriggeringPolicy size="50MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="31"/>
+		</RollingRandomAccessFile>
+	</Appenders>
+	
+	<loggers>
+		<root level="debug">
+			<appender-ref ref="TestLog"/>
+			<appender-ref ref="Console"/>
+		</root>
+	</loggers>
+</Configuration>
